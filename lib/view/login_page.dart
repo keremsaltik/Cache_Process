@@ -64,12 +64,14 @@ class _ContactHomePageState extends State<LoginPage> {
             TextFormFieldWidget(
               controller: _titleText,
               hintText: 'Mail',
+              inputType: TextInputType.emailAddress,
             ),
             Padding(padding: EdgeInsets.only(top: 20)),
             TextFormFieldWidget(
               controller: _bodyText,
               hintText: 'Password',
               isObscure: true,
+              inputType: TextInputType.visiblePassword,
             ),
             Padding(padding: EdgeInsets.only(top: 10)),
             Row(
@@ -137,17 +139,20 @@ class TextFormFieldWidget extends StatelessWidget {
     required TextEditingController controller,
     required this.hintText,
     this.isObscure,
+    required this.inputType,
   }) : _controller = controller;
 
   final TextEditingController _controller;
   final String hintText;
   final bool? isObscure;
+  final TextInputType inputType;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.9,
       child: TextFormField(
+        keyboardType: inputType,
         cursorColor: Colors.blue,
         obscureText: isObscure ?? false,
         decoration: InputDecoration(
