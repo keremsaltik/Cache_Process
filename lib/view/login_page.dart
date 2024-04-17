@@ -15,8 +15,8 @@ class _ContactHomePageState extends State<LoginPage> {
   late final MailPasswordCacheManager dataCacheManager;
   TextEditingController _titleText = TextEditingController();
   TextEditingController _bodyText = TextEditingController();
-  String _titleTextString = '';
-  String _bodyTextString = '';
+  late String _titleTextString;
+  late String _bodyTextString;
 
   late bool remember = false;
   @override
@@ -53,66 +53,68 @@ class _ContactHomePageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Text(
-            'Log In',
-            style: TextStyle(fontSize: 30),
-          ),
-          Padding(padding: EdgeInsets.only(top: 185)),
-          TextFormFieldWidget(
-            controller: _titleText,
-            hintText: 'Mail',
-          ),
-          Padding(padding: EdgeInsets.only(top: 20)),
-          TextFormFieldWidget(
-            controller: _bodyText,
-            hintText: 'Password',
-            isObscure: true,
-          ),
-          Padding(padding: EdgeInsets.only(top: 10)),
-          Row(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: checkboxRemember()),
-              Text('Remember Me')
-            ],
-          ),
-          Padding(padding: EdgeInsets.only(top: 20)),
-          SizedBox(
-            width: 125,
-            child: FloatingActionButton(
-              elevation: 5,
-              backgroundColor: Color.fromARGB(255, 17, 219, 226),
-              child: Text(
-                'Log in',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () async {
-                /*If checkbox active (so remember(variable) equals to true) datas will save with values of controllers and saveItems function. 
-                But if one of textformfield is null, will be nothing*/
-                if (remember == true) {
-                  _titleTextString = _titleText.text;
-                  _bodyTextString = _bodyText.text;
-                  if (_titleTextString == '' || _bodyText == '') {}
-                  await saveItems(_titleTextString, _bodyTextString);
-                } else {
-                  await saveItems('', '');
-                  //If remember me button deactive the values must be null.
-                  //Because if old user info keep in the local when press the log in button,
-                  //they will be show. This isn't  logical
-                  //So null values save at local
-                }
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    ));
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              'Log In',
+              style: TextStyle(fontSize: 30),
             ),
-          )
-        ],
+            Padding(padding: EdgeInsets.only(top: 185)),
+            TextFormFieldWidget(
+              controller: _titleText,
+              hintText: 'Mail',
+            ),
+            Padding(padding: EdgeInsets.only(top: 20)),
+            TextFormFieldWidget(
+              controller: _bodyText,
+              hintText: 'Password',
+              isObscure: true,
+            ),
+            Padding(padding: EdgeInsets.only(top: 10)),
+            Row(
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: checkboxRemember()),
+                Text('Remember Me')
+              ],
+            ),
+            Padding(padding: EdgeInsets.only(top: 20)),
+            SizedBox(
+              width: 125,
+              child: FloatingActionButton(
+                elevation: 5,
+                backgroundColor: Color.fromARGB(255, 17, 219, 226),
+                child: Text(
+                  'Log in',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  /*If checkbox active (so remember(variable) equals to true) datas will save with values of controllers and saveItems function. 
+                  But if one of textformfield is null, will be nothing*/
+                  if (remember == true) {
+                    _titleTextString = _titleText.text;
+                    _bodyTextString = _bodyText.text;
+                    if (_titleTextString == '' || _bodyText == '') {}
+                    await saveItems(_titleTextString, _bodyTextString);
+                  } else {
+                    await saveItems('', '');
+                    //If remember me button deactive the values must be null.
+                    //Because if old user info keep in the local when press the log in button,
+                    //they will be show. This isn't  logical
+                    //So null values save at local
+                  }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ));
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
