@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _ContactHomePageState extends State<LoginPage> {
+  GlobalKey<FormState> _key = GlobalKey();
   late final MailPasswordCacheManager dataCacheManager;
   TextEditingController _titleText = TextEditingController();
   TextEditingController _bodyText = TextEditingController();
@@ -54,68 +55,74 @@ class _ContactHomePageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text(
-              'Log In',
-              style: TextStyle(fontSize: 30),
-            ),
-            Padding(padding: EdgeInsets.only(top: 185)),
-            TextFormFieldWidget(
-              controller: _titleText,
-              hintText: 'Mail',
-              inputType: TextInputType.emailAddress,
-            ),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            TextFormFieldWidget(
-              controller: _bodyText,
-              hintText: 'Password',
-              isObscure: true,
-              inputType: TextInputType.visiblePassword,
-            ),
-            Padding(padding: EdgeInsets.only(top: 10)),
-            Row(
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: checkboxRemember()),
-                Text('Remember Me')
-              ],
-            ),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            SizedBox(
-              width: 125,
-              child: FloatingActionButton(
-                elevation: 5,
-                backgroundColor: Color.fromARGB(255, 17, 219, 226),
-                child: Text(
-                  'Log in',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () async {
-                  /*If checkbox active (so remember(variable) equals to true) datas will save with values of controllers and saveItems function. 
-                  But if one of textformfield is null, will be nothing*/
-                  if (remember == true) {
-                    _titleTextString = _titleText.text;
-                    _bodyTextString = _bodyText.text;
-                    if (_titleTextString == '' || _bodyText == '') {}
-                    await saveItems(_titleTextString, _bodyTextString);
-                  } else {
-                    await saveItems('', '');
-                    //If remember me button deactive the values must be null.
-                    //Because if old user info keep in the local when press the log in button,
-                    //they will be show. This isn't  logical
-                    //So null values save at local
-                  }
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(),
-                      ));
-                },
+        child: Form(
+          key: _key,
+          autovalidateMode: AutovalidateMode.always,
+          child: Column(
+            children: [
+              Text(
+                'Log In',
+                style: TextStyle(fontSize: 30),
               ),
-            )
-          ],
+              Padding(padding: EdgeInsets.only(top: 185)),
+              TextFormFieldWidget(
+                controller: _titleText,
+                hintText: 'Mail',
+                inputType: TextInputType.emailAddress,
+              ),
+              Padding(padding: EdgeInsets.only(top: 20)),
+              TextFormFieldWidget(
+                controller: _bodyText,
+                hintText: 'Password',
+                isObscure: true,
+                inputType: TextInputType.visiblePassword,
+              ),
+              Padding(padding: EdgeInsets.only(top: 10)),
+              Row(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: checkboxRemember()),
+                  Text('Remember Me')
+                ],
+              ),
+              Padding(padding: EdgeInsets.only(top: 20)),
+              SizedBox(
+                width: 125,
+                child: FloatingActionButton(
+                  elevation: 5,
+                  backgroundColor: Color.fromARGB(255, 17, 219, 226),
+                  child: Text(
+                    'Log in',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    if (_key.currentState?.validate() ?? false) {
+                      /*If checkbox active (so remember(variable) equals to true) datas will save with values of controllers and saveItems function. 
+                    But if one of textformfield is null, will be nothing*/
+                      if (remember == true) {
+                        _titleTextString = _titleText.text;
+                        _bodyTextString = _bodyText.text;
+                        if (_titleTextString == '' || _bodyText == '') {}
+                        await saveItems(_titleTextString, _bodyTextString);
+                      } else {
+                        await saveItems('', '');
+                        //If remember me button deactive the values must be null.
+                        //Because if old user info keep in the local when press the log in button,
+                        //they will be show. This isn't  logical
+                        //So null values save at local
+                      }
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ));
+                    }
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -167,7 +174,22 @@ class TextFormFieldWidget extends StatelessWidget {
                   color: Colors.lightBlue,
                 ))),
         controller: _controller,
+        validator: (value) {
+          return FormFieldValidator().isNotEmpty(value);
+        },
       ),
     );
   }
+}
+
+class FormFieldValidator {
+  String? isNotEmpty(String? data) {
+    return (data?.isNotEmpty ?? false)
+        ? null
+        : ValidatorMessage._notEmptyMessage;
+  }
+}
+
+class ValidatorMessage {
+  static const String _notEmptyMessage = "This field can not be null";
 }
