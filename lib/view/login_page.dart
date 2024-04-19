@@ -43,11 +43,10 @@ class _ContactHomePageState extends State<LoginPage> {
   }
 
   //For checkbox control. If chechkbox be active, this function will be running
-  bool rememberMe() {
+  void rememberMe() {
     setState(() {
       remember = !remember;
     });
-    return remember;
   }
 
   @override
@@ -57,6 +56,7 @@ class _ContactHomePageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Form(
           key: _key,
+          //Automatically executes validators
           autovalidateMode: AutovalidateMode.always,
           child: Column(
             children: [
@@ -97,13 +97,13 @@ class _ContactHomePageState extends State<LoginPage> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
+                    //Checks if the form is valid before proceeding with an action.
                     if (_key.currentState?.validate() ?? false) {
                       /*If checkbox active (so remember(variable) equals to true) datas will save with values of controllers and saveItems function. 
                     But if one of textformfield is null, will be nothing*/
                       if (remember == true) {
                         _titleTextString = _titleText.text;
                         _bodyTextString = _bodyText.text;
-                        if (_titleTextString == '' || _bodyText == '') {}
                         await saveItems(_titleTextString, _bodyTextString);
                       } else {
                         await saveItems('', '');
