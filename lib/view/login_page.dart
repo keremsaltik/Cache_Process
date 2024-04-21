@@ -3,6 +3,7 @@ import 'package:phone_book/cache/mail_password_cache_manager.dart';
 import 'package:phone_book/cache/mail_password_model.dart';
 import 'package:phone_book/cache/shared_manager.dart';
 import 'package:phone_book/view/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -106,13 +107,16 @@ class _ContactHomePageState extends State<LoginPage> {
                         _bodyTextString = _bodyText.text;
                         await saveItems(_titleTextString, _bodyTextString);
                       } else {
-                        await saveItems('', '');
+                        _titleText.clear();
+                        _bodyText.clear();
+                        dataCacheManager.clearMailAndPassword();
                         //If remember me button deactive the values must be null.
                         //Because if old user info keep in the local when press the log in button,
                         //they will be show. This isn't  logical
-                        //So null values save at local
+                        //So datas will be delete.
                       }
-                      Navigator.push(
+
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => HomePage(),

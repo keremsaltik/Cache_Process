@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phone_book/cache/mail_password_cache_manager.dart';
 import 'package:phone_book/cache/mail_password_model.dart';
 import 'package:phone_book/cache/shared_manager.dart';
+import 'package:phone_book/view/login_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,6 +35,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ));
+            },
+            icon: Icon(Icons.arrow_back)),
         centerTitle: true,
         title: Text("Welcome"),
       ),
@@ -49,13 +59,15 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildTextRow('Mail: ', _users[0].mail.toString()),
+                  _buildTextRow('Mail: ',
+                      _users.isEmpty ? '' : _users[0].mail.toString()),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildTextRow('Password: ', _users[0].password.toString()),
+                  _buildTextRow('Password: ',
+                      _users.isEmpty ? '' : _users[0].password.toString()),
                 ],
               )
             ]),

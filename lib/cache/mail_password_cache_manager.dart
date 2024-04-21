@@ -28,4 +28,8 @@ class MailPasswordCacheManager {
       }).toList();
     }
   }
+
+  Future<void> clearMailAndPassword() async {
+    await sharedManager.clearData();
+  }
 }

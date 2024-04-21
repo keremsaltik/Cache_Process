@@ -34,4 +34,8 @@ class SharedManager {
     _checkPreferences();
     return preferences?.getStringList(key.name);
   }
+
+  Future<void> clearData() async {
+    await preferences?.clear();
+  }
 }
