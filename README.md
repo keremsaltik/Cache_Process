@@ -20,4 +20,4 @@ Shortly:
   Then when click the login button, app navigate to new page. User can see the data written on the card on the new page.
 
 ### Note: It's summary of this project. Please review codes.
-  Codes accessable in lib folder. 
+  Codes accessible in lib folder. 
