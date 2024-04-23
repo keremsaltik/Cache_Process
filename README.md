@@ -14,6 +14,10 @@ Shared Preferences link: https://pub.dev/packages/shared_preferences
 
 ## About This App
 
-User enter own mail and password.
-If remember me button checked, datas (mail and password) will save in list form at device storage.
-If button isn't, datas will save null.
+This project made for understand logical of shared_preferences.
+Shortly:
+  User enter own mail and password. If user choose 'remember me' button (so button are active) users data(s) will be saved.
+  Then when click the login button, app navigate to new page. User can see the data written on the card on the new page.
+
+### Note: It's summary of this project. Please review codes.
+  Codes accessable in lib folder. 
