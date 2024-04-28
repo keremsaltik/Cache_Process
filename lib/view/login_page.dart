@@ -180,6 +180,7 @@ class TextFormFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.all(20),
             hintText: hintText,
+            hintStyle: TextStyle(color: Colors.white),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
             ),
