@@ -15,8 +15,10 @@ class LoginPage extends StatefulWidget {
 class _ContactHomePageState extends State<LoginPage> {
   GlobalKey<FormState> _key = GlobalKey();
   late final MailPasswordCacheManager dataCacheManager;
+
   TextEditingController _titleText = TextEditingController();
   TextEditingController _bodyText = TextEditingController();
+
   late String _titleTextString;
   late String _bodyTextString;
   final String _backgroundLocation = "assets/jpg/background.jpg";
@@ -178,17 +180,21 @@ class TextFormFieldWidget extends StatelessWidget {
         cursorColor: Colors.blue,
         obscureText: isObscure ?? false,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(20),
-            hintText: hintText,
-            hintStyle: TextStyle(color: Colors.white),
-            border: OutlineInputBorder(
+          contentPadding: EdgeInsets.all(20),
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.white),
+          enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
-            ),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(
-                  color: Colors.lightBlue,
-                ))),
+              borderSide: BorderSide(color: Colors.white)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(
+                color: Colors.lightBlue,
+              )),
+        ),
         controller: _controller,
         validator: (value) {
           return FormFieldValidator().isNotEmpty(value);
