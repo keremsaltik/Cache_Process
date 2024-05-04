@@ -22,6 +22,3 @@ Shortly:
 
 ### Note: It's summary of this project. Please review codes.
   Codes accessible in lib folder. 
-
-
-![Screenshot_1714834960]()
