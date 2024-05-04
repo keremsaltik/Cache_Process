@@ -13,6 +13,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _ContactHomePageState extends State<LoginPage> {
+  late final MailPasswordCacheManager mailPasswordCacheManager;
+
+  List<MailPasswordModel> _users = [];
   GlobalKey<FormState> _key = GlobalKey();
   late final MailPasswordCacheManager dataCacheManager;
 
@@ -36,6 +39,8 @@ class _ContactHomePageState extends State<LoginPage> {
     final SharedManager manager = SharedManager();
     await manager.init();
     dataCacheManager = MailPasswordCacheManager(sharedManager: manager);
+    _users = mailPasswordCacheManager.getData() ?? [];
+    setState(() {});
   }
 
   //This function provide save items with parameters via managers
@@ -61,12 +66,12 @@ class _ContactHomePageState extends State<LoginPage> {
             BoxConstraints.expand(height: MediaQuery.of(context).size.height),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(_backgroundLocation), fit: BoxFit.cover)),
+                image: AssetImage(_backgroundLocation), fit: BoxFit.none)),
         child: SingleChildScrollView(
           child: Form(
             key: _key,
             //Automatically executes validators
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
                 Padding(padding: EdgeInsets.only(top: 100)),
