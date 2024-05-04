@@ -110,7 +110,7 @@ class _ContactHomePageState extends State<LoginPage> {
                   child: FloatingActionButton(
                     elevation: 5,
                     backgroundColor:
-                        Color.fromARGB(192, 135, 161, 173), //192, 139, 175, 192
+                        Color.fromARGB(192, 124, 210, 250), //192, 139, 175, 192
                     child: Text(
                       'Log in',
                       style: TextStyle(color: Colors.white),
