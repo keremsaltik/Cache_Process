@@ -109,7 +109,8 @@ class _ContactHomePageState extends State<LoginPage> {
                   width: 125,
                   child: FloatingActionButton(
                     elevation: 5,
-                    backgroundColor: Colors.blue,
+                    backgroundColor:
+                        Color.fromARGB(192, 135, 161, 173), //192, 139, 175, 192
                     child: Text(
                       'Log in',
                       style: TextStyle(color: Colors.white),
@@ -153,7 +154,8 @@ class _ContactHomePageState extends State<LoginPage> {
   Checkbox checkboxRemember() {
     return Checkbox(
       checkColor: Colors.white, // İç tiki beyaz yapar
-      activeColor: Colors.blue, // Seçildiğinde içi mavi yapar
+      activeColor: const Color.fromARGB(
+          178, 33, 149, 243), // Seçildiğinde içi mavi yapar
       value: remember,
       onChanged: (value) {
         rememberMe();
